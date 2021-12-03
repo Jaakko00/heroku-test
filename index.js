@@ -3,7 +3,6 @@ const app = express();
 var cors = require("cors");
 app.use(cors());
 
-
 let config = {
   host: "mydb.tamk.fi",
   user: process.env.user,
@@ -12,7 +11,11 @@ let config = {
   connectionLimit: 10,
 };
 
+const db = [{ name: "tiina" }, { name: "jack" }];
 
+app.get("/names", (req, res) => {
+  res.send(db);
+});
 
 const port = process.env.PORT || 8080;
 
