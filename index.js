@@ -3,7 +3,6 @@ const app = express();
 var cors = require("cors");
 app.use(cors());
 
-const db = [{ name: "tiina" }, { name: "jack" }];
 
 let config = {
   host: "mydb.tamk.fi",
@@ -14,6 +13,13 @@ let config = {
 };
 
 
+
+const port = process.env.PORT || 8080;
+
+const server = app.listen(port, () => {
+  console.log(`Listening on port ${server.address().port}`);
+});
+
 var pool = mysql.createPool(config);
 app.get("/", (req, res) => {
   pool.query("SELECT * from location", (error, results) => {
@@ -23,15 +29,4 @@ app.get("/", (req, res) => {
       res.send(results);
     }
   });
-});
-
-app.get("/names", (req, res) => {
-  res.send(db);
-});
-
-
-const port = process.env.PORT || 8080;
-
-const server = app.listen(port, () => {
-  console.log(`Listening on port ${server.address().port}`);
 });
